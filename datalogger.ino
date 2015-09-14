@@ -8,7 +8,7 @@
 
 #include <SD.h>
 
-const int chipSelect = 4;
+const int chipSelect = 10;
 
 volatile int f_wdt=0;
 
@@ -49,7 +49,7 @@ ISR(WDT_vect)
  ***************************************************/
 void enterSleep(void)
 {
-  set_sleep_mode(SLEEP_MODE_PWR_SAVE);   /* EDIT: could also use SLEEP_MODE_PWR_DOWN for lowest power consumption. */
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);   /* EDIT: could also use SLEEP_MODE_PWR_DOWN for lowest power consumption. */
   sleep_enable();
   
   /* Now enter sleep mode. */
@@ -120,7 +120,8 @@ void loop()
   k=0;
   l=0;
     
-  for (i=0;i<30;i++) {
+  for (i=0;i<1;i++) {
+	f_wdt=1;
         int sensor = analogRead(1);
         j+=sensor;
         sensor = analogRead(2);
