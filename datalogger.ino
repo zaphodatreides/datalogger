@@ -6,11 +6,13 @@
 #include <avr/power.h>
 #include <avr/wdt.h>
 
-#include <SD.h>
+#include <SdFat.h>
 
 const int chipSelect = 10;
 
 volatile int f_wdt=0;
+
+SdFat SD;
 
 
 /***************************************************
