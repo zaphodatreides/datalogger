@@ -25,7 +25,8 @@ volatile int f_wdt=0;
  *
  ***************************************************/
 ISR(WDT_vect)
-{
+{  
+  delay (500);
   if(f_wdt == 0)
   {
     f_wdt=1;
@@ -74,6 +75,8 @@ void setup()
     return;
   }
   Serial.println("card initialized.");
+  delay (1000);
+  digitalWrite(chipSelect,HIGH);
   
   MCUSR &= ~(1<<WDRF);
   
@@ -119,9 +122,8 @@ void loop()
   j=0;
   k=0;
   l=0;
-    
+  f_wdt=1;  
   for (i=0;i<1;i++) {
-	f_wdt=1;
         int sensor = analogRead(1);
         j+=sensor;
         sensor = analogRead(2);
@@ -132,11 +134,12 @@ void loop()
           {
             f_wdt = 0;
             enterSleep(); 
+            //delay (200);
           }               
   }
 
 dataString+=String(millis()) ;
-dataString+=",";
+dataString+=";";
   for (temp=0;temp<=60;temp++) if (temp_table[temp]<=j) break;
   if ((temp>0) && (temp<=60) && (j!=temp_table[temp])) {
     higher=temp_table[temp]; 
@@ -170,10 +173,10 @@ dataString+=",";
 dataString+=String(k);
 */
 
-dataString+=",";
+dataString+=";";
 dataString+=String(l);
 
-
+ digitalWrite (chipSelect,LOW); 
   File dataFile = SD.open("datalog.txt", FILE_WRITE);
 
   // if the file is available, write to it:
@@ -187,6 +190,7 @@ dataString+=String(l);
   else {
     Serial.println("error opening datalog.txt");
   } 
+  digitalWrite(chipSelect,HIGH);
 
 
 }
