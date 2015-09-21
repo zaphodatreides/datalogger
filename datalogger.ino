@@ -139,6 +139,9 @@ void loop()
             //delay (200);
           }               
   }
+k/=30;
+j/=30;
+l/=30;
 
 dataString+=String(millis()) ;
 dataString+=";";
@@ -146,14 +149,14 @@ dataString+=";";
   if ((temp>0) && (temp<=60) && (j!=temp_table[temp])) {
     higher=temp_table[temp]; 
     lower=temp_table[temp-1];
-    fraction=9-trunc(((lower-j)*10)/(lower-higher)); 
+    fraction=trunc(((lower-j)*10)/(lower-higher)); //9-
   } else fraction=0;
   
   for (temp2=0;temp2<=60;temp2++) if (temp_table[temp2]<=k) break;
   if ((temp2>0) && (temp2<=60) && (k!=temp_table[temp2])) {
     higher2=temp_table[temp2]; 
     lower2=temp_table[temp2-1];
-    fraction2=9-trunc(((lower2-k)*10)/(lower2-higher2)); 
+    fraction2=trunc(((lower2-k)*10)/(lower2-higher2)); //9-
   } else fraction2=0;
   
  if (temp<20) { dataString+='-';
