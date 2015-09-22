@@ -14,6 +14,8 @@ volatile int f_wdt=0;
 
 SdFat SD;
 
+#define LED 2
+
 
 /***************************************************
  *  Name:        ISR(WDT_vect)
@@ -71,14 +73,15 @@ void setup()
   
   Serial.begin(9600);
   Serial.print("Initializing SD card...");
-  PinMode (13,OUPUT);
   pinMode(chipSelect, OUTPUT);
+  pinMode (LED,OUTPUT);
+
   if (!SD.begin(chipSelect)) {
     Serial.println("Card failed, or not present");
    for (;;){
-   digitalWrite(13,High);
+   digitalWrite(LED,HIGH);
    delay(1000);
-   digitalWrite(13,Low);
+   digitalWrite(LED,LOW);
    delay(1000);
 	
   }
@@ -86,15 +89,15 @@ void setup()
   }
   
   Serial.println("card initialized.");
-  digitalWrite(13,Low);
+  digitalWrite(LED,LOW);
   delay (500);
-  digitalWrite(13,High);
+  digitalWrite(LED,HIGH);
   delay (250);
-  digitalWrite(13,Low);
+  digitalWrite(LED,LOW);
   delay (500);
-  digitalWrite(13,High);
+  digitalWrite(LED,HIGH);
   delay(250);
-  digitalWrite(13,Low);
+  digitalWrite(LED,LOW);
 
   digitalWrite(chipSelect,HIGH);
 
