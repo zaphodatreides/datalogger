@@ -71,14 +71,33 @@ void setup()
   
   Serial.begin(9600);
   Serial.print("Initializing SD card...");
+  PinMode (13,OUPUT);
   pinMode(chipSelect, OUTPUT);
   if (!SD.begin(chipSelect)) {
     Serial.println("Card failed, or not present");
+   for (;;){
+   digitalWrite(13,High);
+   delay(1000);
+   digitalWrite(13,Low);
+   delay(1000);
+	
+  }
     return;
   }
+  
   Serial.println("card initialized.");
-  delay (1000);
+  digitalWrite(13,Low);
+  delay (500);
+  digitalWrite(13,High);
+  delay (250);
+  digitalWrite(13,Low);
+  delay (500);
+  digitalWrite(13,High);
+  delay(250);
+  digitalWrite(13,Low);
+
   digitalWrite(chipSelect,HIGH);
+
   
   MCUSR &= ~(1<<WDRF);
   
