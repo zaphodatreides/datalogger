@@ -144,7 +144,7 @@ void loop()
   k=0;
   l=0;
   f_wdt=1;  
-  for (i=0;i<1;i++) {
+  for (i=0;i<30;i++) {
         int sensor = analogRead(1);
         j+=sensor;
         sensor = analogRead(2);
