@@ -15,6 +15,7 @@ volatile int f_wdt=0;
 SdFat SD;
 
 #define LED 2
+#define THERMO 3
 
 
 /***************************************************
@@ -75,6 +76,7 @@ void setup()
   Serial.print("Initializing SD card...");
   pinMode(chipSelect, OUTPUT);
   pinMode (LED,OUTPUT);
+  pinMode (THERMO,OUTPUT);
 
   if (!SD.begin(chipSelect)) {
     Serial.println("Card failed, or not present");
@@ -147,13 +149,17 @@ void loop()
   k=0;
   l=0;
   f_wdt=1;  
+  
   for (i=0;i<30;i++) {
+  	digitalWrite (THERMO,HIGH);
+   	delay(1);
         int sensor = analogRead(1);
         j+=sensor;
         sensor = analogRead(2);
         k+=sensor;
         sensor = analogRead(3);
         l+=sensor;
+        digitalWrite (THERMO,LOW);
         if(f_wdt==1)
           {
             f_wdt = 0;
