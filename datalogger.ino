@@ -7,6 +7,10 @@
 #include <avr/wdt.h>
 
 #include <SdFat.h>
+#include <Wire.h>
+#include <Time.h>
+#include <DS1307RTC.h>
+
 
 const int chipSelect = 10;
 
@@ -134,6 +138,7 @@ void setup()
  ***************************************************/
 void loop()
 {
+  tmElements_t tm;
   String dataString = "";
   int i,j,k,l;
   unsigned int temp_table[61] PROGMEM ={843,834,825,815,806,796,786,776,765,754,743,732,721,709,700,686,674,662,649,637,625,612,600,587,575,562,550,537,525,512,500,488,476,463,452,440,428,417,405,394,383,373,362,352,342,332,322,312,303,294,285,276,268,260,252,244,236,229,222,215,208};
@@ -170,8 +175,9 @@ void loop()
 k/=30;
 j/=30;
 l/=30;
-
-dataString+=String(millis()) ;
+if (RTC.read(tm)) {
+dataString= String(tm.Day)+"-"+String(tm.Hour)+":"+String(tm.Minute);
+} else dataString=String(millis());
 dataString+=";";
   for (temp=0;temp<=60;temp++) if (temp_table[temp]<=j) break;
   if ((temp>0) && (temp<=60) && (j!=temp_table[temp])) {
