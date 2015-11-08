@@ -177,7 +177,18 @@ j/=30;
 l/=30;
 if (RTC.read(tm)) {
 dataString= String(tm.Day)+"-"+String(tm.Hour)+":"+String(tm.Minute);
-} else dataString=String(millis());
+} else {
+  if (RTC.chipPresent()) { tm.Day=8;
+  tm.Month=11;
+  tm.Year=CalendarYrToTm(2015);
+  tm.Hour=0;
+  tm.Minute=0;
+  tm.Second=0;
+  RTC.write(tm);
+  dataString= String(tm.Day)+"-"+String(tm.Hour)+":"+String(tm.Minute);      
+  } else dataString=String(millis());
+}
+
 dataString+=";";
   for (temp=0;temp<=60;temp++) if (temp_table[temp]<=j) break;
   if ((temp>0) && (temp<=60) && (j!=temp_table[temp])) {
