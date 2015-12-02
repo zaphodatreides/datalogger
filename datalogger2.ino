@@ -30,7 +30,7 @@ dataString= String(tm.Day)+"-"+String(tm.Hour)+":"+String(tm.Minute);
   dataString= String(tm.Day)+"-"+String(tm.Hour)+":"+String(tm.Minute);      
   } else dataString=String(millis());
 }
-   Serial.print ("timestamp");
+   Serial.print (dataString);
    Serial.print (SEPARATOR);
    Serial.print (analogRead(0));
    Serial.print (SEPARATOR);
